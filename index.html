@@ -19,9 +19,11 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .secret-tracks{display:flex;flex-direction:column;align-items:center;gap:32px;text-align:center;margin-bottom:44px}
 .mystery-icon{font-size:44px;line-height:1;filter:grayscale(1) brightness(2)}
 .mystery-text{font-size:12px;letter-spacing:2px;color:#fff;text-transform:uppercase;max-width:280px;line-height:1.9}
-.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #fff;padding:20px 40px;width:100%;min-height:64px;font-family:'Rock 3D',-apple-system,sans-serif;font-size:clamp(20px,6.5vw,26px);font-weight:400;letter-spacing:1px;text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s;touch-action:manipulation}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #fff;padding:20px 40px;width:100%;min-height:64px;font-family:'Rock 3D',-apple-system,sans-serif;font-size:clamp(20px,6.5vw,26px);font-weight:400;letter-spacing:1px;text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s,background .2s,color .2s;touch-action:manipulation}
 .play-btn:active{transform:scale(.97)}
 .play-btn:disabled{opacity:.4;cursor:not-allowed}
+.play-btn.agotado{background:#c1121f;border-color:#c1121f;color:#fff;opacity:1;cursor:not-allowed}
+.play-btn.agotado .play-triangle{display:none}
 .play-triangle{width:0;height:0;border-left:12px solid #000;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0}
 .footer{padding-top:22px;border-top:1px solid #fff;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#fff;text-transform:uppercase;gap:10px}
 .cd-logo{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:50%;background:conic-gradient(from 0deg,#fff,#000,#fff,#000,#fff);border:1px solid #fff;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
@@ -274,6 +276,7 @@ async function verificarCupo(){
   // Cierre definitivo a 40
   if(restantes<=0){
     playBtn.disabled=true;
+    playBtn.classList.remove('agotado');
     playBtn.innerHTML='CUPO LLENO';
     return 0;
   }
@@ -281,6 +284,7 @@ async function verificarCupo(){
   // Si la pausa ya se hizo antes, no volver a pausar
   if(pausaYaPaso()){
     playBtn.disabled=false;
+    playBtn.classList.remove('agotado');
     playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
     return restantes;
   }
@@ -288,6 +292,7 @@ async function verificarCupo(){
   // Todavía no llegamos al umbral de pausa
   if(total<PAUSA_TRAS){
     playBtn.disabled=false;
+    playBtn.classList.remove('agotado');
     playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
     return restantes;
   }
@@ -304,6 +309,7 @@ async function verificarCupo(){
   const restantePausa=PAUSA_DURACION_MS-(ahora-inicioPausa);
   if(restantePausa>0){
     playBtn.disabled=true;
+    playBtn.classList.add('agotado');
     playBtn.innerHTML='CUPOS AGOTADOS';
     programarReapertura();
     return restantes;
@@ -313,6 +319,7 @@ async function verificarCupo(){
   marcarPausaHecha();
   limpiarPausa();
   playBtn.disabled=false;
+  playBtn.classList.remove('agotado');
   playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
   return restantes;
 }
