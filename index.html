@@ -4,12 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CANCIONES DEL PRÓXIMO DISCO</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -30,9 +27,7 @@
     border-radius: 8px;
     padding: 30px;
     position: relative;
-    box-shadow:
-      0 30px 60px rgba(0, 0, 0, 0.8),
-      inset 0 0 100px rgba(255, 255, 255, 0.03);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 100px rgba(255,255,255,0.03);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -50,6 +45,7 @@
     inset: 0;
     background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%);
     pointer-events: none;
+    z-index: 1;
   }
 
   .brand {
@@ -59,6 +55,8 @@
     text-transform: uppercase;
     margin-bottom: 20px;
     font-weight: 700;
+    position: relative;
+    z-index: 2;
   }
 
   .title {
@@ -72,6 +70,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    position: relative;
+    z-index: 2;
   }
 
   .subtitle {
@@ -80,118 +80,718 @@
     color: #888;
     margin-bottom: 28px;
     text-transform: uppercase;
+    position: relative;
+    z-index: 2;
   }
 
-  .tracklist {
-    list-style: none;
+  .secret-tracks {
     flex: 1;
-    overflow-y: auto;
-    padding-right: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
   }
 
-  .tracklist::-webkit-scrollbar {
-    width: 4px;
+  .mystery-icon {
+    font-size: 52px;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(255,59,59,0.5));
+    animation: pulse 2.5s ease-in-out infinite;
   }
-  .tracklist::-webkit-scrollbar-thumb {
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  .mystery-text {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #666;
+    text-transform: uppercase;
+    max-width: 300px;
+    line-height: 1.7;
+  }
+
+  .mystery-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .mystery-dots span {
+    width: 6px;
+    height: 6px;
     background: #ff3b3b;
-    border-radius: 4px;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: dotBlink 1.5s infinite;
   }
 
-  .tracklist li {
+  .mystery-dots span:nth-child(2) { animation-delay: 0.3s; }
+  .mystery-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+  @keyframes dotBlink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .play-btn {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 9px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(90deg, #ff3b3b 0%, #ff6b3b 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
     font-size: 14px;
-    color: #ddd;
-    transition: color 0.2s, padding-left 0.2s;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border-radius: 50px;
     cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255,59,59,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    z-index: 2;
+    margin-top: 10px;
   }
 
-  .tracklist li:hover {
-    color: #ff3b3b;
-    padding-left: 6px;
+  .play-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(255,59,59,0.6);
   }
 
-  .track-num {
-    font-variant-numeric: tabular-nums;
-    color: #666;
-    font-weight: 700;
-    min-width: 26px;
-  }
+  .play-btn:active { transform: translateY(0) scale(0.98); }
 
-  .tracklist li:hover .track-num {
-    color: #ff3b3b;
-  }
-
-  .track-duration {
-    margin-left: auto;
-    color: #555;
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
+  .play-triangle {
+    width: 0;
+    height: 0;
+    border-left: 12px solid #fff;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
   }
 
   .footer {
     margin-top: 20px;
     padding-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255,255,255,0.1);
     display: flex;
     justify-content: space-between;
     font-size: 10px;
     letter-spacing: 3px;
     color: #555;
     text-transform: uppercase;
+    position: relative;
+    z-index: 2;
   }
 
-  .hole {
+  .cd-logo {
     position: absolute;
-    top: 50%;
+    bottom: 12px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, #000 40%, #1a1a1a 70%, transparent 71%);
+    transform: translateX(-50%);
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
+    background: radial-gradient(circle, #000 22%, transparent 23%),
+                conic-gradient(from 0deg, #333, #666, #333, #666, #333);
+    cursor: pointer;
+    opacity: 0.25;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 5;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .cd-case:hover .hole {
-    opacity: 0.15;
+  .cd-logo:hover {
+    opacity: 0.7;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255,59,59,0.3);
+    border-radius: 14px;
+    padding: 32px 28px;
+    max-width: 460px;
+    width: 100%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+    position: relative;
+    animation: slideUp 0.35s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: #ff3b3b; }
+
+  .modal-tag {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: #ff3b3b;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .modal-title {
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+
+  .modal-sub {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 22px;
+    line-height: 1.5;
+  }
+
+  .counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,59,59,0.08);
+    border: 1px solid rgba(255,59,59,0.25);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 22px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff8b8b;
+  }
+
+  .counter strong {
+    color: #ff3b3b;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  .field { margin-bottom: 16px; }
+
+  .field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border 0.2s, background 0.2s;
+  }
+
+  .field input:focus {
+    outline: none;
+    border-color: #ff3b3b;
+    background: rgba(255,59,59,0.05);
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #ff3b3b 0%, #ff6b3b 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255,59,59,0.4);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .success-msg {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .success-icon { font-size: 48px; margin-bottom: 12px; }
+
+  .success-msg h3 {
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: #ff3b3b;
+  }
+
+  .success-msg p {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.6;
+  }
+
+  .admin-list {
+    margin-top: 18px;
+    max-height: 50vh;
+    overflow-y: auto;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 14px;
+  }
+
+  .admin-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+    font-size: 13px;
+  }
+
+  .admin-item strong { color: #fff; font-weight: 700; }
+
+  .admin-item small { color: #888; font-size: 11px; }
+
+  .admin-empty {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+  }
+
+  .admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .admin-actions button {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: #ccc;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+
+  .admin-actions button:hover { background: rgba(255,255,255,0.1); }
+
+  .loading-text {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  @media (max-width: 480px) {
+    .cd-case { padding: 22px; }
+    .modal { padding: 24px 20px; }
+    .field-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
   <div class="cd-case">
-    <div class="hole"></div>
-
     <div class="brand">● el lorenzo pa</div>
-
     <h1 class="title">Canciones del<br>Próximo Disco</h1>
-
     <p class="subtitle">juntemonos a elegir las canciones</p>
 
-    <ol class="tracklist">
-      <li><span class="track-num">01</span><span>Intro: El Comienzo</span><span class="track-duration">1:42</span></li>
-      <li><span class="track-num">02</span><span>Luces de Neón</span><span class="track-duration">3:28</span></li>
-      <li><span class="track-num">03</span><span>Corazón Roto</span><span class="track-duration">4:01</span></li>
-      <li><span class="track-num">04</span><span>Bailando en la Oscuridad</span><span class="track-duration">3:15</span></li>
-      <li><span class="track-num">05</span><span>Callejón sin Salida</span><span class="track-duration">3:52</span></li>
-      <li><span class="track-num">06</span><span>Sueños Rotos</span><span class="track-duration">4:20</span></li>
-      <li><span class="track-num">07</span><span>Interludio</span><span class="track-duration">1:05</span></li>
-      <li><span class="track-num">08</span><span>Fuego Eterno</span><span class="track-duration">3:44</span></li>
-      <li><span class="track-num">09</span><span>La Última Vez</span><span class="track-duration">4:33</span></li>
-      <li><span class="track-num">10</span><span>Outro: Silencio</span><span class="track-duration">2:10</span></li>
-    </ol>
+    <div class="secret-tracks">
+      <div class="mystery-icon">🔒</div>
+      <p class="mystery-text">
+        Tracklist clasificado<br>
+        Se revela solo para los elegidos
+      </p>
+      <div class="mystery-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <button class="play-btn" id="playBtn">
+        <span class="play-triangle"></span>
+        Play
+      </button>
+    </div>
 
     <div class="footer">
       <span>LP · 2025</span>
-      <span>10 Tracks</span>
+      <span id="footerCupo">Cargando...</span>
+    </div>
+
+    <div class="cd-logo" id="cdLogo"></div>
+  </div>
+
+  <!-- OVERLAY FORMULARIO -->
+  <div class="overlay" id="formOverlay">
+    <div class="modal">
+      <button class="modal-close" data-close>&times;</button>
+      <div class="modal-tag">● Acceso anticipado</div>
+      <h2 class="modal-title">Sumate a la lista</h2>
+      <p class="modal-sub">
+        Solo 40 personas podrán escuchar el disco antes del lanzamiento.
+        Dejanos tus datos y te contactamos.
+      </p>
+
+      <div class="counter">
+        <span>Anotados</span>
+        <span><strong id="counterNum">0</strong> / 40</span>
+      </div>
+
+      <form id="signupForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" required maxlength="40" />
+          </div>
+          <div class="field">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" required maxlength="40" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="celular">Celular</label>
+          <input type="tel" id="celular" required maxlength="20" placeholder="+54 9 11 ..." />
+        </div>
+
+        <div class="field">
+          <label for="instagram">Instagram</label>
+          <input type="text" id="instagram" required maxlength="40" placeholder="@tuusuario" />
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Anotarme
+        </button>
+      </form>
+
+      <div class="success-msg" id="successMsg" style="display:none;">
+        <div class="success-icon">✅</div>
+        <h3>¡Estás dentro!</h3>
+        <p>Te contactamos por WhatsApp para pasarles las canciones secretas 🎧</p>
+      </div>
     </div>
   </div>
+
+  <!-- OVERLAY ADMIN -->
+  <div class="overlay" id="adminOverlay">
+    <div class="modal">
+      <button class="modal-close" data-close>&times;</button>
+      <div class="modal-tag">● Panel secreto</div>
+      <h2 class="modal-title">Lista de anotados</h2>
+      <p class="modal-sub">
+        Total: <strong id="adminTotal" style="color:#ff3b3b;">0</strong> / 40 personas
+      </p>
+
+      <div class="admin-list" id="adminList">
+        <div class="loading-text">Cargando...</div>
+      </div>
+
+      <div class="admin-actions">
+        <button id="copyBtn">Copiar datos</button>
+        <button id="clearBtn">Vaciar lista</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // =============================================
+  // CONFIGURACIÓN DE SUPABASE - REEMPLAZAR
+  // =============================================
+  const SUPABASE_URL = 'https://bwgwxyawlnjlyrtuzupu.supabase.co';
+  const SUPABASE_ANON_KEY = 'process.env.';
+  // =============================================
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const CUPO_MAX = 40;
+  const TABLE = 'anotados';
+
+  // ELEMENTOS
+  const playBtn = document.getElementById('playBtn');
+  const cdLogo = document.getElementById('cdLogo');
+  const formOverlay = document.getElementById('formOverlay');
+  const adminOverlay = document.getElementById('adminOverlay');
+  const signupForm = document.getElementById('signupForm');
+  const successMsg = document.getElementById('successMsg');
+  const counterNum = document.getElementById('counterNum');
+  const footerCupo = document.getElementById('footerCupo');
+  const adminList = document.getElementById('adminList');
+  const adminTotal = document.getElementById('adminTotal');
+  const submitBtn = document.getElementById('submitBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  // ===== CONTADOR EN VIVO =====
+  async function actualizarContador() {
+    const { count, error } = await db
+      .from(TABLE)
+      .select('*', { count: 'exact', head: true });
+
+    if (error) {
+      console.error('Error contador:', error);
+      footerCupo.textContent = 'Error';
+      return;
+    }
+
+    const total = count || 0;
+    counterNum.textContent = total;
+    adminTotal.textContent = total;
+
+    const restantes = CUPO_MAX - total;
+    if (restantes <= 0) {
+      footerCupo.textContent = 'CUPO LLENO';
+      footerCupo.style.color = '#ff3b3b';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Cupo completo';
+    } else {
+      footerCupo.textContent = restantes + ' lugares';
+      footerCupo.style.color = '';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Anotarme';
+    }
+  }
+
+  // ===== ABRIR/CERRAR MODALES =====
+  function abrirOverlay(el) {
+    el.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarOverlays() {
+    document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', cerrarOverlays);
+  });
+
+  document.querySelectorAll('.overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) cerrarOverlays();
+    });
+  });
+
+  // ===== BOTÓN PLAY =====
+  playBtn.addEventListener('click', async () => {
+    const { count } = await db.from(TABLE).select('*', { count: 'exact', head: true });
+    if ((count || 0) >= CUPO_MAX) {
+      alert('El cupo está completo. ¡Gracias por el interés!');
+      return;
+    }
+    successMsg.style.display = 'none';
+    signupForm.style.display = 'block';
+    actualizarContador();
+    abrirOverlay(formOverlay);
+  });
+
+  // ===== FORMULARIO =====
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      apellido: document.getElementById('apellido').value.trim(),
+      celular: document.getElementById('celular').value.trim(),
+      instagram: document.getElementById('instagram').value.trim(),
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    const { error } = await db.from(TABLE).insert([datos]);
+
+    if (error) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Anotarme';
+
+      if (error.code === '23505') {
+        alert('Ese celular ya está anotado.');
+      } else if (error.code === '23514' || error.message?.includes('cupo')) {
+        alert('Lo sentimos, el cupo está completo.');
+      } else {
+        alert('Hubo un error. Intentá de nuevo.');
+        console.error(error);
+      }
+      return;
+    }
+
+    signupForm.reset();
+    signupForm.style.display = 'none';
+    successMsg.style.display = 'block';
+    await actualizarContador();
+
+    setTimeout(() => {
+      cerrarOverlays();
+      signupForm.style.display = 'block';
+      successMsg.style.display = 'none';
+    }, 3500);
+  });
+
+  // ===== LOGO SECRETO: 13 CLICS =====
+  let clickCount = 0;
+  let clickTimer = null;
+
+  cdLogo.addEventListener('click', () => {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
+
+    if (clickCount >= 13) {
+      clickCount = 0;
+      clearTimeout(clickTimer);
+      cargarAdmin();
+      abrirOverlay(adminOverlay);
+    }
+  });
+
+  // ===== CARGAR PANEL ADMIN =====
+  async function cargarAdmin() {
+    adminList.innerHTML = '<div class="loading-text">Cargando...</div>';
+
+    const { data, error } = await db
+      .from(TABLE)
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      adminList.innerHTML = '<div class="admin-empty">Error al cargar</div>';
+      return;
+    }
+
+    adminTotal.textContent = data.length;
+
+    if (data.length === 0) {
+      adminList.innerHTML = '<div class="admin-empty">Todavía no hay anotados</div>';
+      return;
+    }
+
+    adminList.innerHTML = data.map((a, i) => `
+      <div class="admin-item">
+        <strong>${i + 1}. ${escapeHtml(a.nombre)} ${escapeHtml(a.apellido)}</strong>
+        <small>📱 ${escapeHtml(a.celular)} · 📷 ${escapeHtml(a.instagram)}</small>
+        <small style="color:#555;">${new Date(a.created_at).toLocaleString('es-AR')}</small>
+      </div>
+    `).join('');
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // ===== COPIAR =====
+  copyBtn.addEventListener('click', async () => {
+    const { data } = await db.from(TABLE).select('*').order('created_at', { ascending: false });
+    if (!data || data.length === 0) {
+      alert('No hay datos para copiar');
+      return;
+    }
+    const texto = data.map((a, i) =>
+      `${i + 1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram}`
+    ).join('\n');
+
+    navigator.clipboard.writeText(texto)
+      .then(() => {
+        copyBtn.textContent = '¡Copiado!';
+        setTimeout(() => copyBtn.textContent = 'Copiar datos', 1500);
+      })
+      .catch(() => alert('No se pudo copiar'));
+  });
+
+  // ===== VACIAR =====
+  clearBtn.addEventListener('click', async () => {
+    if (!confirm('¿Seguro que querés borrar TODOS los anotados?')) return;
+
+    const { error } = await db.from(TABLE).delete().neq('id', '00000000-0000-0000-0000-000000000000');
+
+    if (error) {
+      alert('Error al borrar: ' + error.message);
+      return;
+    }
+
+    await actualizarContador();
+    cargarAdmin();
+  });
+
+  // ===== INIT =====
+  actualizarContador();
+</script>
 
 </body>
 </html>
