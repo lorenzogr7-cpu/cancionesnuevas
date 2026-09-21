@@ -109,7 +109,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
     <p class="mystery-text"><br>EVENTO PARA ESCUCHAR LAS CANCIONES NUEVAS Y ELEGIR CUALES VAN AL DISCO</p>
     <button class="play-btn" id="playBtn"><span class="play-triangle"></span> KIERO ESTAR</button>
   </div>
-  <div class="footer"><span>2027</span><span id="footerCupo">40 cupos</span></div>
+  <div class="footer"><span>2027</span><span>Colaboración $4.000</span></div>
   <div class="cd-logo" id="cdLogo"></div>
 </div>
 
@@ -188,7 +188,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
     <button class="modal-close" data-close>×</button>
     <div class="modal-tag">● Panel secreto</div>
     <h2 class="modal-title">Lista de anotados</h2>
-    <p class="modal-sub">Total: <strong id="adminTotal">0</strong> / 40 personas</p>
+    <p class="modal-sub">Total: <strong id="adminTotal">0</strong></p>
     <div class="admin-list" id="adminList"><div class="loading-text">Cargando...</div></div>
     <div class="admin-actions">
       <button id="copyBtn">Copiar datos</button>
@@ -208,7 +208,7 @@ const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
-const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),formContent=$('formContent'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),footerCupo=$('footerCupo'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram'),menosBtn=$('menosBtn'),masBtn=$('masBtn'),cantidadNum=$('cantidadNum'),totalValor=$('totalValor');
+const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),formContent=$('formContent'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram'),menosBtn=$('menosBtn'),masBtn=$('masBtn'),cantidadNum=$('cantidadNum'),totalValor=$('totalValor');
 
 let cantidad=1;
 
@@ -235,15 +235,13 @@ async function contarAnotados(){
   return (data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
 }
 
-async function actualizarCupo(){
+async function verificarCupo(){
   const total=await contarAnotados();
   const restantes=CUPO_MAX-total;
   if(restantes<=0){
-    footerCupo.textContent='CUPO LLENO';
     playBtn.disabled=true;
     playBtn.innerHTML='CUPO LLENO';
   }else{
-    footerCupo.textContent=restantes+' cupos';
     playBtn.disabled=false;
     playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
   }
@@ -251,7 +249,7 @@ async function actualizarCupo(){
 }
 
 playBtn.addEventListener('click',async()=>{
-  const restantes=await actualizarCupo();
+  const restantes=await verificarCupo();
   if(restantes<=0){
     alert('El cupo está lleno. ¡Gracias por el interés!');
     return;
@@ -334,7 +332,7 @@ signupForm.addEventListener('submit',async e=>{
   formContent.style.display='none';
   successMsg.style.display='block';
   instagramField.style.display='none';
-  await actualizarCupo();
+  await verificarCupo();
 });
 
 let cc=0,ct=null;
@@ -371,11 +369,11 @@ clearBtn.addEventListener('click',async()=>{
   const {error}=await db.from(TABLE).delete().neq('id','00000000-0000-0000-0000-000000000000');
   if(error){alert('Error: '+error.message);return}
   cargarAdmin();
-  actualizarCupo();
+  verificarCupo();
 });
 
 actualizarTotal();
-actualizarCupo();
+verificarCupo();
 </script>
 
 </body>
