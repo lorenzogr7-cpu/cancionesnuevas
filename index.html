@@ -204,6 +204,10 @@ const ALIAS='ellorenzopa.banda';
 const PRECIO_UNITARIO=4000;
 const MAX_POR_PERSONA=4;
 const CUPO_MAX=40;
+const PAUSA_TRAS=20;
+const PAUSA_DURACION_MS=60*60*1000;
+const STORAGE_PAUSA_KEY='disco_pausa_inicio';
+const STORAGE_PAUSA_HECHA_KEY='disco_pausa_ya_paso';
 const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
@@ -211,6 +215,7 @@ const $=id=>document.getElementById(id);
 const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),formContent=$('formContent'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram'),menosBtn=$('menosBtn'),masBtn=$('masBtn'),cantidadNum=$('cantidadNum'),totalValor=$('totalValor');
 
 let cantidad=1;
+let intervaloCupo=null;
 
 function actualizarTotal(){
   const total=PRECIO_UNITARIO*cantidad;
@@ -235,25 +240,87 @@ async function contarAnotados(){
   return (data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
 }
 
+function getPausaInicio(){
+  const v=localStorage.getItem(STORAGE_PAUSA_KEY);
+  return v?parseInt(v):null;
+}
+function setPausaInicio(ts){localStorage.setItem(STORAGE_PAUSA_KEY,String(ts))}
+function limpiarPausa(){localStorage.removeItem(STORAGE_PAUSA_KEY)}
+function pausaYaPaso(){return localStorage.getItem(STORAGE_PAUSA_HECHA_KEY)==='1'}
+function marcarPausaHecha(){localStorage.setItem(STORAGE_PAUSA_HECHA_KEY,'1')}
+
+function programarReapertura(){
+  if(intervaloCupo){clearTimeout(intervaloCupo);intervaloCupo=null}
+  const inicio=getPausaInicio();
+  if(!inicio)return;
+  const restante=PAUSA_DURACION_MS-(Date.now()-inicio);
+  if(restante<=0){
+    marcarPausaHecha();
+    limpiarPausa();
+    verificarCupo();
+    return;
+  }
+  intervaloCupo=setTimeout(()=>{
+    marcarPausaHecha();
+    limpiarPausa();
+    verificarCupo();
+  }, restante+500);
+}
+
 async function verificarCupo(){
   const total=await contarAnotados();
   const restantes=CUPO_MAX-total;
+
+  // Cierre definitivo a 40
   if(restantes<=0){
     playBtn.disabled=true;
     playBtn.innerHTML='CUPO LLENO';
-  }else{
+    return 0;
+  }
+
+  // Si la pausa ya se hizo antes, no volver a pausar
+  if(pausaYaPaso()){
     playBtn.disabled=false;
     playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
+    return restantes;
   }
+
+  // Todavía no llegamos al umbral de pausa
+  if(total<PAUSA_TRAS){
+    playBtn.disabled=false;
+    playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
+    return restantes;
+  }
+
+  // Llegamos al umbral por primera vez → activar pausa
+  let inicioPausa=getPausaInicio();
+  const ahora=Date.now();
+
+  if(!inicioPausa){
+    inicioPausa=ahora;
+    setPausaInicio(inicioPausa);
+  }
+
+  const restantePausa=PAUSA_DURACION_MS-(ahora-inicioPausa);
+  if(restantePausa>0){
+    playBtn.disabled=true;
+    playBtn.innerHTML='CUPOS AGOTADOS';
+    programarReapertura();
+    return restantes;
+  }
+
+  // Se terminó la pausa → marcar como hecha y abrir
+  marcarPausaHecha();
+  limpiarPausa();
+  playBtn.disabled=false;
+  playBtn.innerHTML='<span class="play-triangle"></span> KIERO ESTAR';
   return restantes;
 }
 
 playBtn.addEventListener('click',async()=>{
+  if(playBtn.disabled)return;
   const restantes=await verificarCupo();
-  if(restantes<=0){
-    alert('El cupo está lleno. ¡Gracias por el interés!');
-    return;
-  }
+  if(playBtn.disabled||restantes<=0)return;
   cantidad=1;
   actualizarTotal();
   formContent.style.display='block';
@@ -286,6 +353,14 @@ signupForm.addEventListener('submit',async e=>{
     alert('El cupo está lleno. ¡Gracias por el interés!');
     cerrar();
     return;
+  }
+
+  if(!pausaYaPaso() && totalAnotados>=PAUSA_TRAS){
+    const inicio=getPausaInicio();
+    if(inicio&&(Date.now()-inicio)<PAUSA_DURACION_MS){
+      alert('Los cupos están agotados por ahora. Volvé a intentar más tarde.');
+      return;
+    }
   }
 
   if(cantidad>restantes){
@@ -368,12 +443,15 @@ clearBtn.addEventListener('click',async()=>{
   if(!confirm('¿Borrar TODOS los anotados?'))return;
   const {error}=await db.from(TABLE).delete().neq('id','00000000-0000-0000-0000-000000000000');
   if(error){alert('Error: '+error.message);return}
+  limpiarPausa();
+  localStorage.removeItem(STORAGE_PAUSA_HECHA_KEY);
   cargarAdmin();
   verificarCupo();
 });
 
 actualizarTotal();
 verificarCupo();
+setInterval(verificarCupo, 60000);
 </script>
 
 </body>
