@@ -33,20 +33,28 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .modal-close{position:absolute;top:8px;right:8px;background:none;border:none;color:#000;font-size:30px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:inherit}
 .modal-tag{font-size:10px;letter-spacing:4px;color:#000;text-transform:uppercase;margin-bottom:10px;font-weight:700}
 .modal-title{font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:10px;line-height:1.2;padding-right:36px;color:#000}
-.modal-sub{font-size:12px;color:#000;margin-bottom:22px;line-height:1.6}
-.precio-box{background:#fff;border:2px solid #000;border-radius:12px;padding:20px 16px;margin-bottom:20px;text-align:center}
+.modal-sub{font-size:12px;color:#000;margin-bottom:20px;line-height:1.6}
+.precio-box{background:#fff;border:2px solid #000;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
 .precio-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
-.precio-valor{font-size:34px;font-weight:900;color:#000;line-height:1}
+.precio-valor{font-size:30px;font-weight:900;color:#000;line-height:1}
 .precio-valor small{font-size:.5em;color:#000;margin-left:4px}
-.alias-box{background:#fff;border:2px dashed #000;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
+.alias-box{background:#fff;border:2px dashed #000;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center}
 .alias-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:10px;font-weight:700}
-.alias-valor{font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#000;margin-bottom:14px;word-break:break-all;user-select:all;-webkit-user-select:all}
-.copy-alias-btn{background:#000;border:2px solid #000;color:#fff;padding:12px 24px;border-radius:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;font-family:inherit;min-height:44px}
+.alias-valor{font-family:'Courier New',monospace;font-size:17px;font-weight:700;color:#000;margin-bottom:12px;word-break:break-all;user-select:all;-webkit-user-select:all}
+.copy-alias-btn{background:#000;border:2px solid #000;color:#fff;padding:10px 22px;border-radius:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;font-family:inherit;min-height:44px}
 .copy-alias-btn.ok{background:#fff;color:#000}
 .info-box{background:#fff;border:2px solid #000;border-radius:6px;padding:14px;font-size:12px;color:#000;line-height:1.7;margin-bottom:18px}
-.steps{font-size:12px;color:#000;line-height:1.8;margin-bottom:20px;padding-left:22px}
-.steps li{margin-bottom:8px}
-.steps li::marker{color:#000;font-weight:700}
+.cantidad-box{background:#fff;border:2px solid #000;border-radius:12px;padding:16px;margin-bottom:18px;text-align:center}
+.cantidad-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:12px;font-weight:700}
+.cantidad-ctrl{display:flex;align-items:center;justify-content:center;gap:16px}
+.cantidad-btn{width:52px;height:52px;background:#000;border:2px solid #000;color:#fff;border-radius:10px;font-size:24px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.cantidad-btn:active{transform:scale(.95)}
+.cantidad-btn:disabled{opacity:.3;cursor:not-allowed}
+.cantidad-num{font-size:36px;font-weight:900;color:#000;min-width:60px;text-align:center;font-variant-numeric:tabular-nums}
+.total-box{background:#000;color:#fff;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
+.total-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:6px;font-weight:700;opacity:.8}
+.total-valor{font-size:32px;font-weight:900;color:#fff;line-height:1}
+.total-valor small{font-size:.5em;margin-left:4px;opacity:.8}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
 .field input{width:100%;padding:14px;background:#fff;border:2px solid #000;border-radius:10px;color:#000;font-size:16px;font-family:inherit;min-height:52px;-webkit-appearance:none;appearance:none}
@@ -64,7 +72,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .submit-btn:disabled{opacity:.4;cursor:not-allowed}
 .success-msg{text-align:center;padding:20px 0}
 .success-icon{font-size:48px;margin-bottom:14px;filter:grayscale(1)}
-.success-msg h3{font-size:20px;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;color:#000}
+.success-msg h3{font-size:20px;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;color:#000}
 .success-msg p{font-size:13px;color:#000;line-height:1.7;margin-bottom:10px}
 .admin-list{margin-top:18px;max-height:45dvh;overflow-y:auto;border-top:2px solid #000;padding-top:14px}
 .admin-item{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px dashed #000;font-size:13px;color:#000}
@@ -113,16 +121,40 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
     <button class="modal-close" data-close>×</button>
     <div class="modal-tag">● Anotate</div>
     <h2 class="modal-title">Tus datos</h2>
-    <p class="modal-sub">Colaboración de <strong>$4.000</strong> al alias <strong>ellorenzopa.banda</strong>. Después te contactamos por WhatsApp con el lugar, la hora y el link para ir escuchando las canciones.</p>
+    <p class="modal-sub">
+      Colaboración de <strong>$4.000 por persona</strong>. Podés sacar hasta 4 entradas.
+      Transferí al alias y <strong>esperá la confirmación por WhatsApp</strong> con el lugar, la hora y el link para escuchar las canciones.
+    </p>
+
+    <div class="cantidad-box">
+      <div class="cantidad-label">¿Cuántas entradas querés?</div>
+      <div class="cantidad-ctrl">
+        <button type="button" class="cantidad-btn" id="menosBtn" disabled>−</button>
+        <div class="cantidad-num" id="cantidadNum">1</div>
+        <button type="button" class="cantidad-btn" id="masBtn">+</button>
+      </div>
+    </div>
+
     <div class="precio-box">
-      <div class="precio-label">Colaboración</div>
+      <div class="precio-label">Colaboración por persona</div>
       <div class="precio-valor">$4.000<small>ARS</small></div>
     </div>
+
+    <div class="total-box">
+      <div class="total-label">Total a transferir</div>
+      <div class="total-valor" id="totalValor">$4.000<small>ARS</small></div>
+    </div>
+
     <div class="alias-box">
       <div class="alias-label">Alias para transferir</div>
       <div class="alias-valor" id="aliasTexto">ellorenzopa.banda</div>
-      <button class="copy-alias-btn" id="copyAliasBtn">Copiar alias</button>
+      <button class="copy-alias-btn" id="copyAliasBtn" type="button">Copiar alias</button>
     </div>
+
+    <div class="info-box">
+      ⚠️ Transferí el <strong>total</strong> al alias y <strong>esperá la confirmación por WhatsApp</strong>. No te anotes si no transferiste.
+    </div>
+
     <form id="signupForm">
       <div class="field-row">
         <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" required maxlength="40"></div>
@@ -145,11 +177,12 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
       </div>
       <button type="submit" class="submit-btn" id="submitBtn">Enviar datos</button>
     </form>
+
     <div class="success-msg" id="successMsg" style="display:none">
       <div class="success-icon">✅</div>
       <h3>¡Estás anotadx!</h3>
-      <p>¡Gracias! Nos vemos para escuchar las canciones nuevas 🎧</p>
-      <p style="font-size:12px;">Te contactamos por WhatsApp con el lugar, la hora y el link.</p>
+      <p>¡Gracias! <strong>Esperá la confirmación por WhatsApp</strong>.</p>
+      <p style="font-size:12px;">Ahí te pasamos el lugar, la hora y el link para ir escuchando las canciones nuevas 🎧</p>
     </div>
   </div>
 </div>
@@ -172,13 +205,27 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 const SUPABASE_URL='https://bwgwxyawlnjlyrtuzupu.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3Z3d4eWF3bG5qbHlydHV6dXB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTYwNzAsImV4cCI6MjEwNTU3MjA3MH0.tTSIg5FXCX8U5u55Ht9PT5BB0BWSYLJzIVhKHUwEsJY';
 const ALIAS='ellorenzopa.banda';
-const MONTO=4000;
+const PRECIO_UNITARIO=4000;
+const MAX_POR_PERSONA=4;
 const CUPO_MAX=40;
 const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
-const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),footerCupo=$('footerCupo'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
+const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),footerCupo=$('footerCupo'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram'),menosBtn=$('menosBtn'),masBtn=$('masBtn'),cantidadNum=$('cantidadNum'),totalValor=$('totalValor');
+
+let cantidad=1;
+
+function actualizarTotal(){
+  const total=PRECIO_UNITARIO*cantidad;
+  totalValor.innerHTML='$'+total.toLocaleString('es-AR')+'<small>ARS</small>';
+  cantidadNum.textContent=cantidad;
+  menosBtn.disabled=cantidad<=1;
+  masBtn.disabled=cantidad>=MAX_POR_PERSONA;
+}
+
+menosBtn.addEventListener('click',()=>{if(cantidad>1){cantidad--;actualizarTotal()}});
+masBtn.addEventListener('click',()=>{if(cantidad<MAX_POR_PERSONA){cantidad++;actualizarTotal()}});
 
 function abrir(el){el.classList.add('active');document.body.style.overflow='hidden'}
 function cerrar(){document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('active'));document.body.style.overflow=''}
@@ -187,9 +234,9 @@ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)cerrar()}));
 
 async function contarAnotados(){
-  const {count,error}=await db.from(TABLE).select('*',{count:'exact',head:true});
+  const {data,error}=await db.from(TABLE).select('cantidad');
   if(error){console.error(error);return 0}
-  return count||0;
+  return (data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
 }
 
 async function actualizarCupo(){
@@ -213,6 +260,8 @@ playBtn.addEventListener('click',async()=>{
     alert('El cupo está lleno. ¡Gracias por el interés!');
     return;
   }
+  cantidad=1;
+  actualizarTotal();
   successMsg.style.display='none';
   signupForm.style.display='block';
   abrir(formOverlay);
@@ -236,10 +285,17 @@ instaNo.addEventListener('change',()=>{
 signupForm.addEventListener('submit',async e=>{
   e.preventDefault();
 
-  const total=await contarAnotados();
-  if(total>=CUPO_MAX){
+  const totalAnotados=await contarAnotados();
+  const restantes=CUPO_MAX-totalAnotados;
+
+  if(restantes<=0){
     alert('El cupo está lleno. ¡Gracias por el interés!');
     cerrar();
+    return;
+  }
+
+  if(cantidad>restantes){
+    alert('Solo quedan '+restantes+' cupos disponibles. Reducí la cantidad.');
     return;
   }
 
@@ -249,24 +305,35 @@ signupForm.addEventListener('submit',async e=>{
     alert('Poné tu usuario de Instagram o elegí "No".');
     return;
   }
+
+  const total=PRECIO_UNITARIO*cantidad;
   const datos={
     nombre:$('nombre').value.trim(),
     apellido:$('apellido').value.trim(),
     celular:$('celular').value.trim(),
     instagram:usaInsta?('@'+instaUser):'no tiene',
     titular_transferencia:'colaboracion',
-    monto:MONTO
+    monto:total,
+    cantidad:cantidad
   };
+
   submitBtn.disabled=true;
   submitBtn.textContent='Enviando...';
+
   const {error}=await db.from(TABLE).insert([datos]);
+
   if(error){
     submitBtn.disabled=false;
     submitBtn.textContent='Enviar datos';
     if(error.code==='23505'){alert('Ese celular ya está anotado.')}
+    else if(error.code==='42703'||error.message?.includes('cantidad')){
+      alert('Falta la columna "cantidad" en la base de datos. Avisale al organizador.');
+      console.error(error);
+    }
     else{alert('Error: '+error.message);console.error(error)}
     return;
   }
+
   signupForm.reset();
   signupForm.style.display='none';
   successMsg.style.display='block';
@@ -286,9 +353,9 @@ async function cargarAdmin(){
   adminList.innerHTML='<div class="loading-text">Cargando...</div>';
   const {data,error}=await db.from(TABLE).select('*').order('created_at',{ascending:false});
   if(error){adminList.innerHTML='<div class="admin-empty">Error al cargar</div>';return}
-  adminTotal.textContent=data.length;
+  adminTotal.textContent=(data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
   if(data.length===0){adminList.innerHTML='<div class="admin-empty">Todavía no hay anotados</div>';return}
-  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>Colaboración: $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
+  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>🎟️ ${a.cantidad||1} entrada(s) · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
@@ -296,7 +363,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 copyBtn.addEventListener('click',async()=>{
   const {data}=await db.from(TABLE).select('*').order('created_at',{ascending:false});
   if(!data||data.length===0){alert('No hay datos');return}
-  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | $${a.monto}`).join('\n');
+  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | ${a.cantidad||1} entrada(s) | $${a.monto}`).join('\n');
   try{await navigator.clipboard.writeText(txt)}
   catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)}
   copyBtn.textContent='¡Copiado!';
@@ -311,6 +378,7 @@ clearBtn.addEventListener('click',async()=>{
   actualizarCupo();
 });
 
+actualizarTotal();
 actualizarCupo();
 </script>
 
