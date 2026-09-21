@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CANCIONES DEL PRÓXIMO DISCO</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nabla&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&family=Special+Elite&display=swap">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overscroll-behavior:none}
@@ -14,7 +14,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .cd-case::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.06) 50%,transparent 70%);pointer-events:none;z-index:1}
 .brand{font-size:clamp(9px,2.4vw,11px);letter-spacing:clamp(3px,1.5vw,6px);color:#ff3b3b;text-transform:uppercase;margin-bottom:clamp(12px,3vw,20px);font-weight:700;position:relative;z-index:2}
-.title{font-family:'Nabla',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(24px,7vw,42px);font-weight:400;line-height:1.15;letter-spacing:0;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:2}
+.title{font-family:'Sixtyfour Convergence',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(24px,7vw,42px);font-weight:400;line-height:1.15;letter-spacing:0;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:2}
 .subtitle{font-size:clamp(9px,2.5vw,12px);letter-spacing:clamp(2px,1vw,4px);color:#888;margin-bottom:clamp(16px,4vw,28px);text-transform:uppercase;position:relative;z-index:2}
 .secret-tracks{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,3vw,16px);position:relative;z-index:2;text-align:center;min-height:0}
 .mystery-icon{font-size:clamp(36px,12vw,52px);line-height:1;filter:drop-shadow(0 0 20px rgba(255,59,59,.5));animation:pl 2.5s ease-in-out infinite}
@@ -25,7 +25,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .mystery-dots span:nth-child(2){animation-delay:.3s}
 .mystery-dots span:nth-child(3){animation-delay:.6s}
 @keyframes db{0%,100%{opacity:.3}50%{opacity:1}}
-.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(90deg,#ff3b3b,#ff6b3b);color:#fff;border:none;padding:16px 40px;min-height:52px;font-family:'Nabla',-apple-system,sans-serif;font-size:clamp(16px,4.5vw,20px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;box-shadow:0 10px 30px rgba(255,59,59,.4);transition:transform .2s;position:relative;z-index:2;margin-top:6px;touch-action:manipulation}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(90deg,#ff3b3b,#ff6b3b);color:#fff;border:none;padding:16px 40px;min-height:52px;font-family:'Sixtyfour Convergence',-apple-system,sans-serif;font-size:clamp(16px,4.5vw,20px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;box-shadow:0 10px 30px rgba(255,59,59,.4);transition:transform .2s;position:relative;z-index:2;margin-top:6px;touch-action:manipulation}
 .play-btn:active{transform:scale(.97)}
 .play-triangle{width:0;height:0;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0;margin-right:4px}
 .footer{margin-top:clamp(12px,3vw,20px);padding-top:clamp(10px,2.5vw,16px);border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;font-size:clamp(8px,2.2vw,10px);letter-spacing:clamp(1.5px,.8vw,3px);color:#555;text-transform:uppercase;position:relative;z-index:2;gap:8px}
