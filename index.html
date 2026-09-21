@@ -11,13 +11,13 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overscroll-behavior:none}
 body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:#fff;min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));color:#000;-webkit-font-smoothing:antialiased}
-.cd-case{width:100%;max-width:520px;aspect-ratio:1/1;max-height:calc(100dvh - 40px);background:#000;border:2px solid #000;border-radius:12px;padding:clamp(22px,5vw,36px) clamp(20px,5vw,32px) clamp(50px,8vw,60px);position:relative;display:flex;flex-direction:column;overflow:hidden;animation:fl 6s ease-in-out infinite}
+.cd-case{width:100%;max-width:520px;aspect-ratio:1/1;max-height:calc(100dvh - 40px);background:#000;border:2px solid #000;border-radius:12px;padding:clamp(28px,6vw,42px) clamp(22px,5.5vw,36px) clamp(70px,10vw,90px);position:relative;display:flex;flex-direction:column;overflow:hidden;animation:fl 6s ease-in-out infinite}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.brand{font-size:clamp(9px,2.4vw,11px);letter-spacing:clamp(3px,1.5vw,6px);color:#fff;text-transform:uppercase;margin-bottom:clamp(16px,4vw,24px);font-weight:700;position:relative;z-index:2}
-.title{font-family:'Rubik Glitch',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(26px,8vw,46px);font-weight:400;line-height:1.15;letter-spacing:0;text-transform:uppercase;margin-bottom:8px;color:#fff;position:relative;z-index:2}
-.subtitle{font-size:clamp(9px,2.5vw,12px);letter-spacing:clamp(2px,1vw,4px);color:#fff;margin-bottom:clamp(20px,5vw,32px);text-transform:uppercase;position:relative;z-index:2}
-.secret-tracks{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(16px,4vw,24px);position:relative;z-index:2;text-align:center;min-height:0;padding:clamp(8px,2vw,16px) 0}
-.mystery-icon{font-size:clamp(36px,12vw,52px);line-height:1;animation:pl 2.5s ease-in-out infinite;filter:grayscale(1) brightness(2)}
+.brand{font-size:clamp(9px,2.4vw,11px);letter-spacing:clamp(3px,1.5vw,6px);color:#fff;text-transform:uppercase;margin-bottom:clamp(20px,5vw,30px);font-weight:700;position:relative;z-index:2;flex-shrink:0}
+.title{font-family:'Rubik Glitch',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(24px,7vw,42px);font-weight:400;line-height:1.2;letter-spacing:0;text-transform:uppercase;margin-bottom:clamp(10px,2.5vw,16px);color:#fff;position:relative;z-index:2;flex-shrink:0}
+.subtitle{font-size:clamp(9px,2.5vw,12px);letter-spacing:clamp(2px,1vw,4px);color:#fff;margin-bottom:0;text-transform:uppercase;position:relative;z-index:2;flex-shrink:0}
+.secret-tracks{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,5vw,32px);position:relative;z-index:2;text-align:center;min-height:0;padding:clamp(24px,6vw,40px) 0}
+.mystery-icon{font-size:clamp(32px,10vw,44px);line-height:1;animation:pl 2.5s ease-in-out infinite;filter:grayscale(1) brightness(2);flex-shrink:0}
 @keyframes pl{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.08);opacity:1}}
 .mystery-text{font-size:clamp(10px,2.8vw,13px);letter-spacing:clamp(1.5px,.6vw,3px);color:#fff;text-transform:uppercase;max-width:300px;line-height:1.8;padding:0 8px}
 .mystery-dots{display:flex;gap:8px;margin-top:6px}
@@ -25,10 +25,10 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .mystery-dots span:nth-child(2){animation-delay:.3s}
 .mystery-dots span:nth-child(3){animation-delay:.6s}
 @keyframes db{0%,100%{opacity:.3}50%{opacity:1}}
-.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #000;padding:16px 40px;min-height:52px;font-family:'Rubik Glitch',-apple-system,sans-serif;font-size:clamp(16px,4.5vw,20px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;margin-top:clamp(8px,2vw,14px);touch-action:manipulation}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #000;padding:16px 40px;min-height:52px;font-family:'Rubik Glitch',-apple-system,sans-serif;font-size:clamp(16px,4.5vw,20px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;margin-top:clamp(12px,3vw,20px);touch-action:manipulation;flex-shrink:0}
 .play-btn:active{transform:scale(.97)}
 .play-triangle{width:0;height:0;border-left:12px solid #000;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0;margin-right:4px}
-.footer{margin-top:clamp(20px,5vw,32px);padding-top:clamp(14px,3vw,20px);border-top:1px solid #fff;display:flex;justify-content:space-between;font-size:clamp(8px,2.2vw,10px);letter-spacing:clamp(1.5px,.8vw,3px);color:#fff;text-transform:uppercase;position:relative;z-index:2;gap:8px}
+.footer{margin-top:clamp(28px,7vw,44px);padding-top:clamp(16px,4vw,22px);border-top:1px solid #fff;display:flex;justify-content:space-between;font-size:clamp(8px,2.2vw,10px);letter-spacing:clamp(1.5px,.8vw,3px);color:#fff;text-transform:uppercase;position:relative;z-index:2;gap:8px;flex-shrink:0}
 .cd-logo{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:conic-gradient(from 0deg,#fff,#000,#fff,#000,#fff);border:1px solid #fff;cursor:pointer;transition:transform .3s;z-index:5;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 @media(hover:hover){.cd-logo{width:26px;height:26px;bottom:16px}.cd-logo:hover{transform:translateX(-50%) rotate(45deg)}}
 .overlay{position:fixed;inset:0;background:#fff;display:none;align-items:center;justify-content:center;padding:12px;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -87,15 +87,15 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .loading-text{color:#000;font-size:12px;text-align:center;padding:20px 0}
 @media(max-width:480px){
 body{padding:12px;align-items:flex-start;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
-.cd-case{max-height:none;aspect-ratio:auto;padding:26px 20px 70px;border-radius:16px;min-height:auto}
-.secret-tracks{padding:32px 0 24px;gap:20px}
-.brand{margin-bottom:18px}
-.title{font-size:clamp(28px,9vw,40px);line-height:1.25}
-.subtitle{margin-bottom:8px}
-.mystery-icon{font-size:44px}
-.mystery-text{line-height:1.8}
-.play-btn{padding:18px 32px;width:100%;margin-top:16px;font-size:clamp(18px,5.5vw,22px)}
-.footer{margin-top:24px;padding-top:14px}
+.cd-case{max-height:none;aspect-ratio:auto;padding:32px 22px 90px;border-radius:16px;min-height:auto}
+.secret-tracks{padding:40px 0 32px;gap:28px}
+.brand{margin-bottom:26px}
+.title{font-size:clamp(26px,8.5vw,38px);line-height:1.25;margin-bottom:12px}
+.subtitle{margin-bottom:0}
+.mystery-icon{font-size:40px}
+.mystery-text{line-height:1.8;font-size:12px}
+.play-btn{padding:20px 32px;width:100%;margin-top:20px;font-size:clamp(18px,5.5vw,22px)}
+.footer{margin-top:36px;padding-top:18px}
 .field-row{grid-template-columns:1fr}
 .modal{border-radius:14px;max-height:calc(100dvh - 20px);padding:24px 18px}
 .submit-btn{padding:18px}
