@@ -11,27 +11,27 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overscroll-behavior:none}
 body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:#fff;min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));color:#000;-webkit-font-smoothing:antialiased}
-.cd-case{width:100%;max-width:520px;aspect-ratio:1/1;max-height:calc(100dvh - 40px);background:#000;border-radius:12px;padding:clamp(16px,5vw,30px);position:relative;box-shadow:0 30px 60px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow:hidden;animation:fl 6s ease-in-out infinite}
+.cd-case{width:100%;max-width:520px;aspect-ratio:1/1;max-height:calc(100dvh - 40px);background:#000;border-radius:12px;padding:clamp(22px,5vw,36px) clamp(20px,5vw,32px) clamp(50px,8vw,60px);position:relative;box-shadow:0 30px 60px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow:hidden;animation:fl 6s ease-in-out infinite}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .cd-case::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.06) 50%,transparent 70%);pointer-events:none;z-index:1}
-.brand{font-size:clamp(9px,2.4vw,11px);letter-spacing:clamp(3px,1.5vw,6px);color:#fff;text-transform:uppercase;margin-bottom:clamp(12px,3vw,20px);font-weight:700;position:relative;z-index:2}
+.brand{font-size:clamp(9px,2.4vw,11px);letter-spacing:clamp(3px,1.5vw,6px);color:#fff;text-transform:uppercase;margin-bottom:clamp(16px,4vw,24px);font-weight:700;position:relative;z-index:2;opacity:.85}
 .title{font-family:'Sixtyfour Convergence',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(22px,6.5vw,40px);font-weight:400;line-height:1.15;letter-spacing:0;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:2}
-.subtitle{font-size:clamp(9px,2.5vw,12px);letter-spacing:clamp(2px,1vw,4px);color:#fff;margin-bottom:clamp(16px,4vw,28px);text-transform:uppercase;position:relative;z-index:2;opacity:.7}
-.secret-tracks{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,3vw,16px);position:relative;z-index:2;text-align:center;min-height:0}
+.subtitle{font-size:clamp(9px,2.5vw,12px);letter-spacing:clamp(2px,1vw,4px);color:#fff;margin-bottom:clamp(20px,5vw,32px);text-transform:uppercase;position:relative;z-index:2;opacity:.7}
+.secret-tracks{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(16px,4vw,24px);position:relative;z-index:2;text-align:center;min-height:0;padding:clamp(8px,2vw,16px) 0}
 .mystery-icon{font-size:clamp(36px,12vw,52px);line-height:1;animation:pl 2.5s ease-in-out infinite;filter:grayscale(1) brightness(2)}
 @keyframes pl{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.08);opacity:1}}
-.mystery-text{font-size:clamp(10px,2.8vw,13px);letter-spacing:clamp(1.5px,.6vw,3px);color:#fff;text-transform:uppercase;max-width:300px;line-height:1.7;padding:0 8px;opacity:.7}
+.mystery-text{font-size:clamp(10px,2.8vw,13px);letter-spacing:clamp(1.5px,.6vw,3px);color:#fff;text-transform:uppercase;max-width:300px;line-height:1.8;padding:0 8px;opacity:.75}
 .mystery-dots{display:flex;gap:8px;margin-top:6px}
 .mystery-dots span{width:6px;height:6px;background:#fff;border-radius:50%;opacity:.3;animation:db 1.5s infinite}
 .mystery-dots span:nth-child(2){animation-delay:.3s}
 .mystery-dots span:nth-child(3){animation-delay:.6s}
 @keyframes db{0%,100%{opacity:.3}50%{opacity:1}}
-.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #000;padding:16px 40px;min-height:52px;font-family:'Sixtyfour Convergence',-apple-system,sans-serif;font-size:clamp(15px,4.2vw,18px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;margin-top:6px;touch-action:manipulation}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #000;padding:16px 40px;min-height:52px;font-family:'Sixtyfour Convergence',-apple-system,sans-serif;font-size:clamp(15px,4.2vw,18px);font-weight:400;letter-spacing:clamp(1px,.5vw,2px);text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;margin-top:clamp(8px,2vw,14px);touch-action:manipulation}
 .play-btn:active{transform:scale(.97)}
 .play-triangle{width:0;height:0;border-left:12px solid #000;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0;margin-right:4px}
-.footer{margin-top:clamp(12px,3vw,20px);padding-top:clamp(10px,2.5vw,16px);border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;font-size:clamp(8px,2.2vw,10px);letter-spacing:clamp(1.5px,.8vw,3px);color:#fff;text-transform:uppercase;position:relative;z-index:2;gap:8px;opacity:.5}
-.cd-logo{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#000 22%,transparent 23%),conic-gradient(from 0deg,#fff,#000,#fff,#000,#fff);cursor:pointer;opacity:.2;transition:opacity .3s,transform .3s;z-index:5;user-select:none;-webkit-user-select:none;touch-action:manipulation}
-@media(hover:hover){.cd-logo{width:26px;height:26px;bottom:12px;opacity:.3}.cd-logo:hover{opacity:.7;transform:translateX(-50%) rotate(45deg)}}
+.footer{margin-top:clamp(20px,5vw,32px);padding-top:clamp(14px,3vw,20px);border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;font-size:clamp(8px,2.2vw,10px);letter-spacing:clamp(1.5px,.8vw,3px);color:#fff;text-transform:uppercase;position:relative;z-index:2;gap:8px;opacity:.5}
+.cd-logo{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#000 22%,transparent 23%),conic-gradient(from 0deg,#fff,#000,#fff,#000,#fff);cursor:pointer;opacity:.2;transition:opacity .3s,transform .3s;z-index:5;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+@media(hover:hover){.cd-logo{width:26px;height:26px;bottom:16px;opacity:.3}.cd-logo:hover{opacity:.7;transform:translateX(-50%) rotate(45deg)}}
 .overlay{position:fixed;inset:0;background:#fff;display:none;align-items:center;justify-content:center;padding:12px;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .overlay.active{display:flex;animation:fi .3s ease}
 @keyframes fi{from{opacity:0}to{opacity:1}}
@@ -87,12 +87,18 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .admin-actions button:active{background:#000;color:#fff}
 .loading-text{color:#000;font-size:12px;text-align:center;padding:20px 0;opacity:.6}
 @media(max-width:480px){
-body{padding:10px;align-items:flex-start;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom))}
-.cd-case{max-height:none;aspect-ratio:auto;padding:24px 18px 70px;border-radius:16px}
-.secret-tracks{padding:24px 0}
+body{padding:12px;align-items:flex-start;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
+.cd-case{max-height:none;aspect-ratio:auto;padding:26px 20px 70px;border-radius:16px;min-height:auto}
+.secret-tracks{padding:32px 0 24px;gap:20px}
+.brand{margin-bottom:18px}
+.title{font-size:clamp(24px,7.5vw,34px);line-height:1.2}
+.subtitle{margin-bottom:8px}
+.mystery-icon{font-size:44px}
+.mystery-text{line-height:1.8}
+.play-btn{padding:18px 32px;width:100%;margin-top:16px}
+.footer{margin-top:24px;padding-top:14px}
 .field-row{grid-template-columns:1fr}
 .modal{border-radius:14px;max-height:calc(100dvh - 20px);padding:24px 18px}
-.play-btn{padding:18px 32px;width:100%}
 .submit-btn{padding:18px}
 .whatsapp-btn{padding:16px 20px}
 }
