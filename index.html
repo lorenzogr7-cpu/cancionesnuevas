@@ -34,10 +34,6 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .modal-tag{font-size:10px;letter-spacing:4px;color:#000;text-transform:uppercase;margin-bottom:10px;font-weight:700}
 .modal-title{font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:10px;line-height:1.2;padding-right:36px;color:#000}
 .modal-sub{font-size:12px;color:#000;margin-bottom:20px;line-height:1.6}
-.precio-box{background:#fff;border:2px solid #000;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
-.precio-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
-.precio-valor{font-size:30px;font-weight:900;color:#000;line-height:1}
-.precio-valor small{font-size:.5em;color:#000;margin-left:4px}
 .alias-box{background:#fff;border:2px dashed #000;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center}
 .alias-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:10px;font-weight:700}
 .alias-valor{font-family:'Courier New',monospace;font-size:17px;font-weight:700;color:#000;margin-bottom:12px;word-break:break-all;user-select:all;-webkit-user-select:all}
@@ -51,9 +47,9 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .cantidad-btn:active{transform:scale(.95)}
 .cantidad-btn:disabled{opacity:.3;cursor:not-allowed}
 .cantidad-num{font-size:36px;font-weight:900;color:#000;min-width:60px;text-align:center;font-variant-numeric:tabular-nums}
-.total-box{background:#000;color:#fff;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
-.total-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:6px;font-weight:700;opacity:.8}
-.total-valor{font-size:32px;font-weight:900;color:#fff;line-height:1}
+.total-box{background:#000;color:#fff;border-radius:12px;padding:20px 16px;margin-bottom:18px;text-align:center}
+.total-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:8px;font-weight:700;opacity:.8}
+.total-valor{font-size:34px;font-weight:900;color:#fff;line-height:1}
 .total-valor small{font-size:.5em;margin-left:4px;opacity:.8}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
@@ -135,11 +131,6 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
       </div>
     </div>
 
-    <div class="precio-box">
-      <div class="precio-label">Colaboración por persona</div>
-      <div class="precio-valor">$4.000<small>ARS</small></div>
-    </div>
-
     <div class="total-box">
       <div class="total-label">Total a transferir</div>
       <div class="total-valor" id="totalValor">$4.000<small>ARS</small></div>
@@ -152,7 +143,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
     </div>
 
     <div class="info-box">
-      ⚠️ Transferí el <strong>total</strong> al alias y <strong>esperá la confirmación por WhatsApp</strong>. No te anotes si no transferiste.
+      ⚠️ Transferí el <strong>total</strong> al alias y <strong>esperá la confirmación por WhatsApp</strong>.
     </div>
 
     <form id="signupForm">
@@ -235,7 +226,7 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
 
 async function contarAnotados(){
   const {data,error}=await db.from(TABLE).select('cantidad');
-  if(error){console.error(error);return 0}
+  if(error){console.error('Error contando:',error);return 0}
   return (data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
 }
 
@@ -326,8 +317,8 @@ signupForm.addEventListener('submit',async e=>{
     submitBtn.disabled=false;
     submitBtn.textContent='Enviar datos';
     if(error.code==='23505'){alert('Ese celular ya está anotado.')}
-    else if(error.code==='42703'||error.message?.includes('cantidad')){
-      alert('Falta la columna "cantidad" en la base de datos. Avisale al organizador.');
+    else if(error.code==='42703'){
+      alert('Falta la columna "cantidad" en Supabase. Ejecutá: ALTER TABLE anotados ADD COLUMN cantidad integer default 1;');
       console.error(error);
     }
     else{alert('Error: '+error.message);console.error(error)}
