@@ -217,7 +217,6 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .success-icon{font-size:48px;margin-bottom:14px;filter:grayscale(1)}
 .success-msg h3{font-size:20px;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;color:#000}
 .success-msg p{font-size:13px;color:#000;line-height:1.7;margin-bottom:10px}
-.whatsapp-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:#000;color:#fff;padding:16px 24px;border:2px solid #000;border-radius:50px;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-top:18px;font-family:inherit;width:100%;min-height:54px;cursor:pointer}
 .admin-list{margin-top:18px;max-height:45dvh;overflow-y:auto;border-top:2px solid #000;padding-top:14px}
 .admin-item{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px dashed #000;font-size:13px;color:#000}
 .admin-item strong{color:#000;font-weight:700;word-break:break-word}
@@ -317,8 +316,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
     <div class="success-msg" id="successMsg" style="display:none">
       <div class="success-icon">✅</div>
       <h3>¡Datos recibidos!</h3>
-      <p>Te contactamos por WhatsApp para confirmar el pago y te pasamos: las canciones, el dia y lugar para escucharlas juntxs 🎧</p>
-      <button class="whatsapp-btn" id="whatsappConfirmBtn">💬 Avisarnos por WhatsApp</button>
+      <p>¡Gracias! Nos vemos para escuchar las canciones nuevas 🎧</p>
     </div>
   </div>
 </div>
@@ -347,7 +345,7 @@ const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
-const playBtn=$('playBtn'),cdLogo=$('cdLogo'),pagoOverlay=$('pagoOverlay'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),yaTransferiBtn=$('yaTransferiBtn'),whatsappConfirmBtn=$('whatsappConfirmBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
+const playBtn=$('playBtn'),cdLogo=$('cdLogo'),pagoOverlay=$('pagoOverlay'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),yaTransferiBtn=$('yaTransferiBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
 
 function abrir(el){el.classList.add('active');document.body.style.overflow='hidden'}
 function cerrar(){document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('active'));document.body.style.overflow=''}
@@ -411,13 +409,6 @@ signupForm.addEventListener('submit',async e=>{
   signupForm.style.display='none';
   successMsg.style.display='block';
   instagramField.style.display='none';
-});
-
-whatsappConfirmBtn.addEventListener('click',()=>{
-  const n=$('nombre').value.trim()||'';
-  const a=$('apellido').value.trim()||'';
-  const msg=encodeURIComponent(`Hola! Ya transferí $5000 por la entrada al disco. Mi nombre es ${n} ${a}.`);
-  window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`,'_blank');
 });
 
 let cc=0,ct=null;
