@@ -185,19 +185,6 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .modal-tag{font-size:10px;letter-spacing:4px;color:#000;text-transform:uppercase;margin-bottom:10px;font-weight:700}
 .modal-title{font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:10px;line-height:1.2;padding-right:36px;color:#000}
 .modal-sub{font-size:12px;color:#000;margin-bottom:22px;line-height:1.6}
-.precio-box{background:#fff;border:2px solid #000;border-radius:12px;padding:20px 16px;margin-bottom:20px;text-align:center}
-.precio-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
-.precio-valor{font-size:34px;font-weight:900;color:#000;line-height:1}
-.precio-valor small{font-size:.5em;color:#000;margin-left:4px}
-.alias-box{background:#fff;border:2px dashed #000;border-radius:12px;padding:18px 16px;margin-bottom:18px;text-align:center}
-.alias-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;margin-bottom:10px;font-weight:700}
-.alias-valor{font-family:'Courier New',monospace;font-size:18px;font-weight:700;color:#000;margin-bottom:14px;word-break:break-all;user-select:all;-webkit-user-select:all}
-.copy-alias-btn{background:#000;border:2px solid #000;color:#fff;padding:12px 24px;border-radius:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;font-family:inherit;min-height:44px}
-.copy-alias-btn.ok{background:#fff;color:#000}
-.info-box{background:#fff;border:2px solid #000;border-radius:6px;padding:14px;font-size:12px;color:#000;line-height:1.7;margin-bottom:18px}
-.steps{font-size:12px;color:#000;line-height:1.8;margin-bottom:20px;padding-left:22px}
-.steps li{margin-bottom:8px}
-.steps li::marker{color:#000;font-weight:700}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#000;margin-bottom:8px;font-weight:700}
 .field input{width:100%;padding:14px;background:#fff;border:2px solid #000;border-radius:10px;color:#000;font-size:16px;font-family:inherit;min-height:52px;-webkit-appearance:none;appearance:none}
@@ -253,43 +240,18 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
   <div class="secret-tracks">
     <div class="mystery-icon">🔒</div>
     <p class="mystery-text">Tracklist secreto<br>...</p>
-    <button class="play-btn" id="playBtn"><span class="play-triangle"></span> Comprar entrada</button>
+    <button class="play-btn" id="playBtn"><span class="play-triangle"></span> Anotarme</button>
   </div>
-  <div class="footer"><span>2027</span><span>Entrada $5.000</span></div>
+  <div class="footer"><span>2027</span><span>Entrada libre</span></div>
   <div class="cd-logo" id="cdLogo"></div>
-</div>
-
-<div class="overlay" id="pagoOverlay">
-  <div class="modal">
-    <button class="modal-close" data-close>×</button>
-    <div class="modal-tag">● Paso 1 de 2</div>
-    <h2 class="modal-title">Transferí tu entrada</h2>
-    <p class="modal-sub">Hacé la transferencia y después completá tus datos.</p>
-    <div class="precio-box">
-      <div class="precio-label">Precio de la entrada</div>
-      <div class="precio-valor">$5.000<small>ARS</small></div>
-    </div>
-    <div class="alias-box">
-      <div class="alias-label">Alias para transferir</div>
-      <div class="alias-valor" id="aliasTexto">ellorenzopa.banda</div>
-      <button class="copy-alias-btn" id="copyAliasBtn">Copiar alias</button>
-    </div>
-    <div class="info-box">⚠️ Transferí exactamente <strong>$5.000</strong> al alias. Guardá el comprobante.</div>
-    <ol class="steps">
-      <li>Abrí tu app bancaria o billetera virtual.</li>
-      <li>Transferí $5.000 al alias <strong>ellorenzopa.banda</strong>.</li>
-      <li>Tocá "Ya transferí" para completar tus datos.</li>
-    </ol>
-    <button class="submit-btn" id="yaTransferiBtn">Ya transferí → siguiente</button>
-  </div>
 </div>
 
 <div class="overlay" id="formOverlay">
   <div class="modal">
     <button class="modal-close" data-close>×</button>
-    <div class="modal-tag">● Paso 2 de 2</div>
+    <div class="modal-tag">● Anotate</div>
     <h2 class="modal-title">Tus datos</h2>
-    <p class="modal-sub">Con estos datos confirmamos el pago y te pasamos: las canciones, el dia y lugar para escucharlas juntxs</p>
+    <p class="modal-sub">Con estos datos te contactamos por WhatsApp para pasarte el lugar, la hora y el link para ir escuchando las canciones.</p>
     <form id="signupForm">
       <div class="field-row">
         <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" required maxlength="40"></div>
@@ -310,13 +272,13 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
           <input type="text" id="instagram" maxlength="30" placeholder="tuusuario" autocapitalize="none" autocomplete="off">
         </div>
       </div>
-      <div class="field"><label for="titular">Nombre del titular que transfirió</label><input type="text" id="titular" required maxlength="80" placeholder="Quien transfirió"></div>
       <button type="submit" class="submit-btn" id="submitBtn">Enviar datos</button>
     </form>
     <div class="success-msg" id="successMsg" style="display:none">
       <div class="success-icon">✅</div>
-      <h3>¡Datos recibidos!</h3>
+      <h3>¡Estás anotadx!</h3>
       <p>¡Gracias! Nos vemos para escuchar las canciones nuevas 🎧</p>
+      <p style="font-size:12px;">Te contactamos por WhatsApp con el lugar, la hora y el link.</p>
     </div>
   </div>
 </div>
@@ -338,14 +300,12 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 <script>
 const SUPABASE_URL='https://bwgwxyawlnjlyrtuzupu.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3Z3d4eWF3bG5qbHlydHV6dXB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTYwNzAsImV4cCI6MjEwNTU3MjA3MH0.tTSIg5FXCX8U5u55Ht9PT5BB0BWSYLJzIVhKHUwEsJY';
-const ALIAS='ellorenzopa.banda';
-const MONTO=5000;
 const WHATSAPP_NUMERO='TU_NUMERO_ACA';
 const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
-const playBtn=$('playBtn'),cdLogo=$('cdLogo'),pagoOverlay=$('pagoOverlay'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),yaTransferiBtn=$('yaTransferiBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
+const playBtn=$('playBtn'),cdLogo=$('cdLogo'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
 
 function abrir(el){el.classList.add('active');document.body.style.overflow='hidden'}
 function cerrar(){document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('active'));document.body.style.overflow=''}
@@ -356,20 +316,7 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
 playBtn.addEventListener('click',()=>{
   successMsg.style.display='none';
   signupForm.style.display='block';
-  abrir(pagoOverlay);
-});
-
-copyAliasBtn.addEventListener('click',async()=>{
-  try{await navigator.clipboard.writeText(ALIAS)}
-  catch(e){const t=document.createElement('textarea');t.value=ALIAS;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)}
-  copyAliasBtn.textContent='¡Copiado!';
-  copyAliasBtn.classList.add('ok');
-  setTimeout(()=>{copyAliasBtn.textContent='Copiar alias';copyAliasBtn.classList.remove('ok')},1800);
-});
-
-yaTransferiBtn.addEventListener('click',()=>{
-  cerrar();
-  setTimeout(()=>abrir(formOverlay),150);
+  abrir(formOverlay);
 });
 
 instaSi.addEventListener('change',()=>{
@@ -392,8 +339,8 @@ signupForm.addEventListener('submit',async e=>{
     apellido:$('apellido').value.trim(),
     celular:$('celular').value.trim(),
     instagram:usaInsta?('@'+instaUser):'no tiene',
-    titular_transferencia:$('titular').value.trim(),
-    monto:MONTO
+    titular_transferencia:'entrada gratuita',
+    monto:0
   };
   submitBtn.disabled=true;
   submitBtn.textContent='Enviando...';
@@ -425,7 +372,7 @@ async function cargarAdmin(){
   if(error){adminList.innerHTML='<div class="admin-empty">Error al cargar</div>';return}
   adminTotal.textContent=data.length;
   if(data.length===0){adminList.innerHTML='<div class="admin-empty">Todavía no hay anotados</div>';return}
-  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>Titular: ${esc(a.titular_transferencia)} · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
+  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
@@ -433,7 +380,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 copyBtn.addEventListener('click',async()=>{
   const {data}=await db.from(TABLE).select('*').order('created_at',{ascending:false});
   if(!data||data.length===0){alert('No hay datos');return}
-  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | Titular: ${a.titular_transferencia} | $${a.monto}`).join('\n');
+  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram}`).join('\n');
   try{await navigator.clipboard.writeText(txt)}
   catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)}
   copyBtn.textContent='¡Copiado!';
