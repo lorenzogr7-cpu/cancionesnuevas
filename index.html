@@ -157,6 +157,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
           <div class="field"><label for="apellido">Apellido</label><input type="text" id="apellido" required maxlength="40"></div>
         </div>
         <div class="field"><label for="celular">Dejanos tu Wathsapp</label><input type="tel" id="celular" required maxlength="20" placeholder="+54 9 11 ..." inputmode="tel"></div>
+        <div class="field"><label for="titular">Titular de la transferencia</label><input type="text" id="titular" required maxlength="80" placeholder="A nombre de quién se transfirió"></div>
         <div class="field">
           <label>¿Usás Instagram?</label>
           <div class="radio-group">
@@ -273,7 +274,6 @@ async function verificarCupo(){
   const total=await contarAnotados();
   const restantes=CUPO_MAX-total;
 
-  // Cierre definitivo a 40
   if(restantes<=0){
     playBtn.disabled=true;
     playBtn.classList.remove('agotado');
@@ -281,7 +281,6 @@ async function verificarCupo(){
     return 0;
   }
 
-  // Si la pausa ya se hizo antes, no volver a pausar
   if(pausaYaPaso()){
     playBtn.disabled=false;
     playBtn.classList.remove('agotado');
@@ -289,7 +288,6 @@ async function verificarCupo(){
     return restantes;
   }
 
-  // Todavía no llegamos al umbral de pausa
   if(total<PAUSA_TRAS){
     playBtn.disabled=false;
     playBtn.classList.remove('agotado');
@@ -297,7 +295,6 @@ async function verificarCupo(){
     return restantes;
   }
 
-  // Llegamos al umbral por primera vez → activar pausa
   let inicioPausa=getPausaInicio();
   const ahora=Date.now();
 
@@ -315,7 +312,6 @@ async function verificarCupo(){
     return restantes;
   }
 
-  // Se terminó la pausa → marcar como hecha y abrir
   marcarPausaHecha();
   limpiarPausa();
   playBtn.disabled=false;
@@ -387,8 +383,8 @@ signupForm.addEventListener('submit',async e=>{
     nombre:$('nombre').value.trim(),
     apellido:$('apellido').value.trim(),
     celular:$('celular').value.trim(),
+    titular_transferencia:$('titular').value.trim(),
     instagram:usaInsta?('@'+instaUser):'no tiene',
-    titular_transferencia:'colaboracion',
     monto:total,
     cantidad:cantidad
   };
@@ -403,7 +399,7 @@ signupForm.addEventListener('submit',async e=>{
     submitBtn.textContent='Enviar datos';
     if(error.code==='23505'){alert('Ese celular ya está anotado.')}
     else if(error.code==='42703'){
-      alert('Falta la columna "cantidad" en Supabase. Ejecutá: ALTER TABLE anotados ADD COLUMN cantidad integer default 1;');
+      alert('Falta alguna columna en Supabase. Ejecutá: ALTER TABLE anotados ADD COLUMN cantidad integer default 1;');
       console.error(error);
     }
     else{alert('Error: '+error.message);console.error(error)}
@@ -431,7 +427,7 @@ async function cargarAdmin(){
   if(error){adminList.innerHTML='<div class="admin-empty">Error al cargar</div>';return}
   adminTotal.textContent=(data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
   if(data.length===0){adminList.innerHTML='<div class="admin-empty">Todavía no hay anotados</div>';return}
-  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>🎟️ ${a.cantidad||1} entrada(s) · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
+  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>Titular: ${esc(a.titular_transferencia)}</small><small>🎟️ ${a.cantidad||1} entrada(s) · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
@@ -439,7 +435,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 copyBtn.addEventListener('click',async()=>{
   const {data}=await db.from(TABLE).select('*').order('created_at',{ascending:false});
   if(!data||data.length===0){alert('No hay datos');return}
-  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | ${a.cantidad||1} entrada(s) | $${a.monto}`).join('\n');
+  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | Titular: ${a.titular_transferencia} | ${a.cantidad||1} entrada(s) | $${a.monto}`).join('\n');
   try{await navigator.clipboard.writeText(txt)}
   catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)}
   copyBtn.textContent='¡Copiado!';
