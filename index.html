@@ -19,12 +19,12 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
 .secret-tracks{display:flex;flex-direction:column;align-items:center;gap:32px;text-align:center;margin-bottom:44px}
 .mystery-icon{font-size:44px;line-height:1;filter:grayscale(1) brightness(2)}
 .mystery-text{font-size:12px;letter-spacing:2px;color:#fff;text-transform:uppercase;max-width:280px;line-height:1.9}
-.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#000;border:2px solid #fff;padding:20px 40px;width:100%;min-height:64px;font-family:'Rock 3D',-apple-system,sans-serif;font-size:clamp(20px,6.5vw,26px);font-weight:400;letter-spacing:1px;text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s,background .2s,color .2s;touch-action:manipulation}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#1DB954;color:#fff;border:2px solid #1DB954;padding:20px 40px;width:100%;min-height:64px;font-family:'Rock 3D',-apple-system,sans-serif;font-size:clamp(20px,6.5vw,26px);font-weight:400;letter-spacing:1px;text-transform:uppercase;border-radius:50px;cursor:pointer;transition:transform .2s,background .2s,color .2s;touch-action:manipulation}
 .play-btn:active{transform:scale(.97)}
 .play-btn:disabled{opacity:.4;cursor:not-allowed}
 .play-btn.agotado{background:#c1121f;border-color:#c1121f;color:#fff;opacity:1;cursor:not-allowed}
 .play-btn.agotado .play-triangle{display:none}
-.play-triangle{width:0;height:0;border-left:12px solid #000;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0}
+.play-triangle{width:0;height:0;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;flex-shrink:0}
 .footer{padding-top:22px;border-top:1px solid #fff;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#fff;text-transform:uppercase;gap:10px}
 .cd-logo{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:50%;background:conic-gradient(from 0deg,#fff,#000,#fff,#000,#fff);border:1px solid #fff;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .cd-logo:hover{transform:translateX(-50%) rotate(45deg)}
@@ -152,10 +152,7 @@ body{font-family:'Special Elite',-apple-system,BlinkMacSystemFont,'Helvetica Neu
       </div>
 
       <form id="signupForm">
-        <div class="field-row">
-          <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" required maxlength="40"></div>
-          <div class="field"><label for="apellido">Apellido</label><input type="text" id="apellido" required maxlength="40"></div>
-        </div>
+        <div class="field"><label for="nombreCompleto">Nombre y apellido</label><input type="text" id="nombreCompleto" required maxlength="80" placeholder="Ej: Juan Pérez"></div>
         <div class="field"><label for="celular">Dejanos tu Wathsapp</label><input type="tel" id="celular" required maxlength="20" placeholder="261 ..." inputmode="tel"></div>
         <div class="field"><label for="titular">Titular de la transferencia</label><input type="text" id="titular" required maxlength="80" placeholder="A nombre de quién se transfirió"></div>
         <div class="field">
@@ -378,10 +375,11 @@ signupForm.addEventListener('submit',async e=>{
     return;
   }
 
+  const nombreCompleto=$('nombreCompleto').value.trim();
   const total=PRECIO_UNITARIO*cantidad;
   const datos={
-    nombre:$('nombre').value.trim(),
-    apellido:$('apellido').value.trim(),
+    nombre:nombreCompleto,
+    apellido:'',
     celular:$('celular').value.trim(),
     titular_transferencia:$('titular').value.trim(),
     instagram:usaInsta?('@'+instaUser):'no tiene',
@@ -427,7 +425,7 @@ async function cargarAdmin(){
   if(error){adminList.innerHTML='<div class="admin-empty">Error al cargar</div>';return}
   adminTotal.textContent=(data||[]).reduce((sum,a)=>sum+(a.cantidad||1),0);
   if(data.length===0){adminList.innerHTML='<div class="admin-empty">Todavía no hay anotados</div>';return}
-  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)} ${esc(a.apellido)}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>Titular: ${esc(a.titular_transferencia)}</small><small>🎟️ ${a.cantidad||1} entrada(s) · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
+  adminList.innerHTML=data.map((a,i)=>`<div class="admin-item"><strong>${i+1}. ${esc(a.nombre)}${a.apellido?' '+esc(a.apellido):''}</strong><small>📱 ${esc(a.celular)} · 📷 ${esc(a.instagram)}</small><small>Titular: ${esc(a.titular_transferencia)}</small><small>🎟️ ${a.cantidad||1} entrada(s) · $${a.monto}</small><small>${new Date(a.created_at).toLocaleString('es-AR')}</small></div>`).join('');
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
@@ -435,7 +433,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 copyBtn.addEventListener('click',async()=>{
   const {data}=await db.from(TABLE).select('*').order('created_at',{ascending:false});
   if(!data||data.length===0){alert('No hay datos');return}
-  const txt=data.map((a,i)=>`${i+1}. ${a.nombre} ${a.apellido} | ${a.celular} | ${a.instagram} | Titular: ${a.titular_transferencia} | ${a.cantidad||1} entrada(s) | $${a.monto}`).join('\n');
+  const txt=data.map((a,i)=>`${i+1}. ${a.nombre}${a.apellido?' '+a.apellido:''} | ${a.celular} | ${a.instagram} | Titular: ${a.titular_transferencia} | ${a.cantidad||1} entrada(s) | $${a.monto}`).join('\n');
   try{await navigator.clipboard.writeText(txt)}
   catch(e){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)}
   copyBtn.textContent='¡Copiado!';
