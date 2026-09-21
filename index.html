@@ -59,6 +59,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .field input{width:100%;padding:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:16px;font-family:inherit;min-height:48px;-webkit-appearance:none;appearance:none}
 .field input:focus{outline:none;border-color:#ff3b3b;background:rgba(255,59,59,.05)}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.radio-group{display:flex;gap:10px}
+.radio-opt{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;color:#ccc;text-transform:uppercase;letter-spacing:1px;transition:all .2s;min-height:48px}
+.radio-opt input{display:none}
+.radio-opt:has(input:checked){background:rgba(255,59,59,.15);border-color:#ff3b3b;color:#fff}
+.input-prefijo{display:flex;align-items:stretch;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden;transition:border .2s}
+.input-prefijo:focus-within{border-color:#ff3b3b;background:rgba(255,59,59,.05)}
+.input-prefijo .prefijo{display:flex;align-items:center;padding:0 12px;background:rgba(255,59,59,.12);color:#ff8b8b;font-weight:900;font-size:18px;border-right:1px solid rgba(255,59,59,.2)}
+.input-prefijo input{flex:1;border:none!important;background:transparent!important;border-radius:0!important;padding:14px 12px!important;min-height:48px}
+.input-prefijo input:focus{outline:none}
 .submit-btn{width:100%;padding:16px;min-height:52px;background:linear-gradient(90deg,#ff3b3b,#ff6b3b);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:8px;font-family:inherit;touch-action:manipulation}
 .submit-btn:active:not(:disabled){transform:scale(.98)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed}
@@ -140,7 +149,20 @@ body{padding:10px;align-items:flex-start;padding-top:max(20px,env(safe-area-inse
         <div class="field"><label for="apellido">Apellido</label><input type="text" id="apellido" required maxlength="40"></div>
       </div>
       <div class="field"><label for="celular">Celular</label><input type="tel" id="celular" required maxlength="20" placeholder="+54 9 11 ..." inputmode="tel"></div>
-      <div class="field"><label for="instagram">Instagram</label><input type="text" id="instagram" required maxlength="40" placeholder="@tuusuario" autocapitalize="none"></div>
+      <div class="field">
+        <label>¿Tenés Instagram?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="tieneInsta" value="si" id="instaSi"><span>Sí</span></label>
+          <label class="radio-opt"><input type="radio" name="tieneInsta" value="no" id="instaNo" checked><span>No</span></label>
+        </div>
+      </div>
+      <div class="field" id="instagramField" style="display:none">
+        <label for="instagram">Usuario de Instagram</label>
+        <div class="input-prefijo">
+          <span class="prefijo">@</span>
+          <input type="text" id="instagram" maxlength="30" placeholder="tuusuario" autocapitalize="none" autocomplete="off">
+        </div>
+      </div>
       <div class="field"><label for="titular">Nombre del titular que transfirió</label><input type="text" id="titular" required maxlength="80" placeholder="Quien transfirió"></div>
       <button type="submit" class="submit-btn" id="submitBtn">Enviar datos</button>
     </form>
@@ -177,7 +199,7 @@ const TABLE='anotados';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
-const playBtn=$('playBtn'),cdLogo=$('cdLogo'),pagoOverlay=$('pagoOverlay'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),yaTransferiBtn=$('yaTransferiBtn'),whatsappConfirmBtn=$('whatsappConfirmBtn');
+const playBtn=$('playBtn'),cdLogo=$('cdLogo'),pagoOverlay=$('pagoOverlay'),formOverlay=$('formOverlay'),adminOverlay=$('adminOverlay'),signupForm=$('signupForm'),successMsg=$('successMsg'),adminList=$('adminList'),adminTotal=$('adminTotal'),submitBtn=$('submitBtn'),copyBtn=$('copyBtn'),clearBtn=$('clearBtn'),copyAliasBtn=$('copyAliasBtn'),yaTransferiBtn=$('yaTransferiBtn'),whatsappConfirmBtn=$('whatsappConfirmBtn'),instaSi=$('instaSi'),instaNo=$('instaNo'),instagramField=$('instagramField'),instagramInput=$('instagram');
 
 function abrir(el){el.classList.add('active');document.body.style.overflow='hidden'}
 function cerrar(){document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('active'));document.body.style.overflow=''}
@@ -204,13 +226,26 @@ yaTransferiBtn.addEventListener('click',()=>{
   setTimeout(()=>abrir(formOverlay),150);
 });
 
+instaSi.addEventListener('change',()=>{
+  if(instaSi.checked){instagramField.style.display='block';instagramInput.focus()}
+});
+instaNo.addEventListener('change',()=>{
+  if(instaNo.checked){instagramField.style.display='none';instagramInput.value=''}
+});
+
 signupForm.addEventListener('submit',async e=>{
   e.preventDefault();
+  const usaInsta=instaSi.checked;
+  const instaUser=instagramInput.value.trim().replace(/^@/,'');
+  if(usaInsta&&!instaUser){
+    alert('Poné tu usuario de Instagram o elegí "No".');
+    return;
+  }
   const datos={
     nombre:$('nombre').value.trim(),
     apellido:$('apellido').value.trim(),
     celular:$('celular').value.trim(),
-    instagram:$('instagram').value.trim(),
+    instagram:usaInsta?('@'+instaUser):'no tiene',
     titular_transferencia:$('titular').value.trim(),
     monto:MONTO
   };
@@ -227,6 +262,7 @@ signupForm.addEventListener('submit',async e=>{
   signupForm.reset();
   signupForm.style.display='none';
   successMsg.style.display='block';
+  instagramField.style.display='none';
 });
 
 whatsappConfirmBtn.addEventListener('click',()=>{
