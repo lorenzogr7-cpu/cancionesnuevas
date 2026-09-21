@@ -4,8 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#000000" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>CANCIONES DEL PRÓXIMO DISCO</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -21,7 +19,6 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
-    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
     color: #fff;
     -webkit-font-smoothing: antialiased;
   }
@@ -164,6 +161,7 @@
     z-index: 2;
     margin-top: 6px;
     touch-action: manipulation;
+    font-family: inherit;
   }
   .play-btn:active { transform: translateY(0) scale(0.97); }
   @media (hover: hover) {
@@ -227,7 +225,6 @@
     align-items: center;
     justify-content: center;
     padding: 12px;
-    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
     z-index: 100;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -270,6 +267,7 @@
     align-items: center;
     justify-content: center;
     touch-action: manipulation;
+    font-family: inherit;
   }
   .modal-close:active { color: #ff3b3b; }
 
@@ -299,13 +297,12 @@
     line-height: 1.5;
   }
 
-  /* ===== CAJA DE PRECIO ===== */
   .precio-box {
     background: linear-gradient(135deg, rgba(255,59,59,0.15), rgba(255,107,59,0.08));
     border: 1px solid rgba(255,59,59,0.4);
     border-radius: 12px;
     padding: 18px 16px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     text-align: center;
   }
 
@@ -333,13 +330,12 @@
     margin-left: 4px;
   }
 
-  /* ===== CAJA DEL ALIAS ===== */
   .alias-box {
     background: rgba(255,255,255,0.04);
     border: 1px dashed rgba(255,59,59,0.5);
     border-radius: 12px;
     padding: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     text-align: center;
   }
 
@@ -381,12 +377,24 @@
     min-height: 40px;
   }
   .copy-alias-btn:active { background: rgba(255,59,59,0.3); transform: scale(0.97); }
+  .copy-alias-btn.copiado { background: rgba(37,211,102,0.2); color: #25D366; border-color: rgba(37,211,102,0.5); }
+
+  .info-box {
+    background: rgba(255,59,59,0.08);
+    border-left: 3px solid #ff3b3b;
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #ff8b8b;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
 
   .steps {
     font-size: 12px;
     color: #aaa;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     padding-left: 20px;
   }
   .steps li { margin-bottom: 6px; }
@@ -457,10 +465,11 @@
     font-size: clamp(12px, 3vw, 13px);
     color: #aaa;
     line-height: 1.6;
+    margin-bottom: 8px;
   }
 
   .whatsapp-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -479,6 +488,9 @@
     font-family: inherit;
     width: 100%;
     min-height: 48px;
+    border: none;
+    cursor: pointer;
+    touch-action: manipulation;
   }
   .whatsapp-btn:active { transform: scale(0.97); }
 
@@ -501,36 +513,13 @@
   .admin-item strong { color: #fff; font-weight: 700; word-break: break-word; }
   .admin-item small { color: #888; font-size: clamp(10px, 2.8vw, 11px); word-break: break-word; }
 
-  .estado-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 20px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-left: 6px;
-  }
-  .estado-pendiente { background: rgba(255,193,7,0.15); color: #ffc107; }
-  .estado-confirmado { background: rgba(37,211,102,0.15); color: #25D366; }
-
-  .admin-empty {
-    color: #666;
-    font-size: clamp(11px, 3vw, 12px);
-    text-align: center;
-    padding: 20px 0;
-    font-style: italic;
-  }
-
   .admin-actions {
     display: flex;
     gap: 10px;
     margin-top: 14px;
-    flex-wrap: wrap;
   }
   .admin-actions button {
     flex: 1;
-    min-width: 100px;
     padding: 14px 10px;
     min-height: 48px;
     background: rgba(255,255,255,0.05);
@@ -546,24 +535,12 @@
     touch-action: manipulation;
   }
   .admin-actions button:active { background: rgba(255,255,255,0.15); }
-  .admin-actions button.wsp { background: rgba(37,211,102,0.15); color: #25D366; border-color: rgba(37,211,102,0.3); }
 
   .loading-text {
     color: #666;
     font-size: clamp(11px, 3vw, 12px);
     text-align: center;
     padding: 20px 0;
-  }
-
-  .info-box {
-    background: rgba(255,59,59,0.08);
-    border-left: 3px solid #ff3b3b;
-    border-radius: 6px;
-    padding: 12px 14px;
-    font-size: 12px;
-    color: #ff8b8b;
-    line-height: 1.6;
-    margin-bottom: 18px;
   }
 
   @media (max-width: 480px) {
@@ -632,7 +609,7 @@
     <div class="cd-logo" id="cdLogo"></div>
   </div>
 
-  <!-- ===== MODAL 1: PAGO / TRANSFERENCIA ===== -->
+  <!-- ===== MODAL 1: PAGO ===== -->
   <div class="overlay" id="pagoOverlay">
     <div class="modal">
       <button class="modal-close" data-close>&times;</button>
@@ -640,7 +617,6 @@
       <h2 class="modal-title">Transferí tu entrada</h2>
       <p class="modal-sub">
         Hacé la transferencia y después completá tus datos.
-        Te confirmamos por WhatsApp.
       </p>
 
       <div class="precio-box">
@@ -662,7 +638,7 @@
       <ol class="steps">
         <li>Abrí tu app bancaria o billetera virtual.</li>
         <li>Transferí $5.000 al alias <strong>ellorenzopa.banda</strong>.</li>
-        <li>Tocá el botón "Ya transferí" para completar tus datos.</li>
+        <li>Tocá "Ya transferí" para completar tus datos.</li>
       </ol>
 
       <button class="submit-btn" id="yaTransferiBtn">
@@ -671,7 +647,7 @@
     </div>
   </div>
 
-  <!-- ===== MODAL 2: FORMULARIO DE DATOS ===== -->
+  <!-- ===== MODAL 2: FORMULARIO ===== -->
   <div class="overlay" id="formOverlay">
     <div class="modal">
       <button class="modal-close" data-close>&times;</button>
@@ -704,7 +680,7 @@
         </div>
 
         <div class="field">
-          <label for="titular">Nombre del titular de la transferencia</label>
+          <label for="titular">Nombre del titular que transfirió</label>
           <input type="text" id="titular" required maxlength="80" placeholder="Quien transfirió" />
         </div>
 
@@ -717,16 +693,12 @@
         <div class="success-icon">✅</div>
         <h3>¡Datos recibidos!</h3>
         <p>
-          Ahora nos contactamos con vos por WhatsApp para confirmar el pago
+          Te contactamos por WhatsApp para confirmar el pago
           y pasarte las canciones secretas 🎧
         </p>
-        <a href="https://wa.me/5491100000000?text=Hola!%20Ya%20transfer%C3%AD%20mi%20entrada%20para%20el%20disco.%20Mi%20nombre%20es%20" 
-           target="_blank" 
-           rel="noopener"
-           class="whatsapp-btn" 
-           id="whatsappConfirmBtn">
-          <span>💬 Escribirnos por WhatsApp</span>
-        </a>
+        <button class="whatsapp-btn" id="whatsappConfirmBtn">
+          💬 Avisarnos por WhatsApp
+        </button>
       </div>
     </div>
   </div>
@@ -761,13 +733,11 @@
 
   const ALIAS = 'ellorenzopa.banda';
   const MONTO = 5000;
-  // 👇 CAMBIÁ ESTE NÚMERO POR TU WHATSAPP (código país + área + número, sin + ni espacios)
+  // 👇 CAMBIÁ ESTE NÚMERO POR TU WHATSAPP (país + área + número, sin + ni espacios)
   const WHATSAPP_NUMERO = '5491100000000';
-
   // =============================================
 
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const CUPO_MAX = 40;
   const TABLE = 'anotados';
 
   // ELEMENTOS
@@ -786,13 +756,95 @@
   const copyAliasBtn = document.getElementById('copyAliasBtn');
   const yaTransferiBtn = document.getElementById('yaTransferiBtn');
   const whatsappConfirmBtn = document.getElementById('whatsappConfirmBtn');
-  const aliasTexto = document.getElementById('aliasTexto');
 
-  // ===== CONTADOR (interno, no visible) =====
-  async function actualizarContador() {
-    const { count, error } = await db
-      .from(TABLE)
-      .select('*', { count: 'exact', head: true });
+  // ===== MODALES =====
+  function abrirOverlay(el) {
+    el.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarOverlays() {
+    document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', cerrarOverlays);
+  });
+
+  document.querySelectorAll('.overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) cerrarOverlays();
+    });
+  });
+
+  // ===== BOTÓN PLAY → abre modal de pago =====
+  playBtn.addEventListener('click', () => {
+    successMsg.style.display = 'none';
+    signupForm.style.display = 'block';
+    abrirOverlay(pagoOverlay);
+  });
+
+  // ===== COPIAR ALIAS =====
+  copyAliasBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(ALIAS);
+      copyAliasBtn.textContent = '¡Copiado!';
+      copyAliasBtn.classList.add('copiado');
+      setTimeout(() => {
+        copyAliasBtn.textContent = 'Copiar alias';
+        copyAliasBtn.classList.remove('copiado');
+      }, 1800);
+    } catch (e) {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = ALIAS;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      copyAliasBtn.textContent = '¡Copiado!';
+      copyAliasBtn.classList.add('copiado');
+      setTimeout(() => {
+        copyAliasBtn.textContent = 'Copiar alias';
+        copyAliasBtn.classList.remove('copiado');
+      }, 1800);
+    }
+  });
+
+  // ===== YA TRANSFERÍ → abre formulario =====
+  yaTransferiBtn.addEventListener('click', () => {
+    cerrarOverlays();
+    setTimeout(() => abrirOverlay(formOverlay), 150);
+  });
+
+  // ===== FORMULARIO =====
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      apellido: document.getElementById('apellido').value.trim(),
+      celular: document.getElementById('celular').value.trim(),
+      instagram: document.getElementById('instagram').value.trim(),
+      titular_transferencia: document.getElementById('titular').value.trim(),
+      monto: MONTO
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    const { error } = await db.from(TABLE).insert([datos]);
 
     if (error) {
-      console.error('Error
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar datos';
+
+      if (error.code === '23505') {
+        alert('Ese celular ya está anotado.');
+      } else {
+        alert('Hubo un error: ' + error.message);
+        console.error(error);
+      }
+      return;
+   
